@@ -53,9 +53,9 @@ func main() {
 	// log.Info("alternative - unwrappedError matches ErrLevel1Error: ", unwrappedError.Error() == fakepkg.ErrLevel1ErrorMsg)
 
 	// proper way to check
-	log.Info("alternative causer str comp - err matches fakepkg.ErrLevel1Error: ", errors.Cause(err).Error() == fakepkg.ErrLevel1ErrorMsg)
-	log.Info("alternative causer str comp - err matches fakepkg.ErrLevel2Error: ", errors.Cause(err).Error() == fakepkg.ErrLevel2ErrorMsg)
-	log.Info("alternative causer str comp - err matches nestedpkg.ErrFakeErrorMsg: ", errors.Cause(err).Error() == nestedpkg.ErrFakeErrorMsg)
+	log.Info("causer str comp - err matches fakepkg.ErrLevel1Error: ", errors.Cause(err).Error() == fakepkg.ErrLevel1ErrorMsg)
+	log.Info("causer str comp - err matches fakepkg.ErrLevel2Error: ", errors.Cause(err).Error() == fakepkg.ErrLevel2ErrorMsg)
+	log.Info("causer str comp - err matches nestedpkg.ErrFakeErrorMsg: ", errors.Cause(err).Error() == nestedpkg.ErrFakeErrorMsg)
 
 	log.Info("cause", errors.Cause(err))
 
@@ -69,5 +69,4 @@ func main() {
 	log.Error(errors.New(ErrFakeErrorMsg), "new-fake-error-msg")
 
 	log.Error(fmt.Errorf("this is a basic error with no causer or stack"), "basic-err")
-
 }

@@ -108,15 +108,15 @@ func Error(err error, msgs ...interface{}) {
 		stackStr = strings.TrimSpace(stackStr)
 	}
 
-	if cause == "" {
-		defaultLogger.Error().Caller(1).Err(err).Msg(fmt.Sprintf("%v", msgs))
-
-	} else if stackStr == "" {
-		defaultLogger.Error().Caller(1).Err(err).Str("cause", cause).Msg(fmt.Sprintf("%v", msgs))
+	if cause != "" {
+		if stackStr != "" {
+			defaultLogger.Error().Caller(1).Err(err).Str("stack", stackStr).Str("cause", cause).Msg(fmt.Sprintf("%v", msgs))
+		} else {
+			defaultLogger.Error().Caller(1).Err(err).Str("cause", cause).Msg(fmt.Sprintf("%v", msgs))
+		}
 	} else {
-		defaultLogger.Error().Caller(1).Err(err).Str("stack", stackStr).Str("cause", cause).Msg(fmt.Sprintf("%v", msgs))
+		defaultLogger.Error().Caller(1).Err(err).Msg(fmt.Sprintf("%v", msgs))
 	}
-
 }
 
 // With adds a key,value pair to the global logger logs

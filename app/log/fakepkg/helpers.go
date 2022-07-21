@@ -8,5 +8,6 @@ import (
 
 func nestedErrorTwoLevels() error {
 	err := nestedpkg.ReturnNestedErr()
+
 	return errors.Wrap(err, ErrLevel2ErrorMsg)
 }
