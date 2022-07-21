@@ -2,15 +2,15 @@ linters:
   enable-all: true
 
   disable:
-    # - goerr113
-    # - gofumpt        # Prefer `gofmt` rules / some rules conflict with `wsl`
+    - goerr113
+    - gofumpt        # Prefer `gofmt` rules / some rules conflict with `wsl`
     # - gomnd          # XXX: For now
     - nonamedreturns # I disagree with the rationale behind this linter
     - exhaustivestruct
     # - golint
-    # - interfacer 
-    # - maligned
-    # - scopelint
+    - interfacer 
+    - maligned
+    - scopelint
     # - bodyclose
     - contextcheck
     # - nilerr
