@@ -1,10 +1,6 @@
 package log
 
 import (
-	"fmt"
-	"path"
-	"runtime"
-
 	"github.com/pkg/errors"
 )
 
@@ -35,25 +31,4 @@ func Cause(err error) error {
 		return tracer.Cause()
 	}
 	return err
-}
-
-func GetCauseCallerFromErr(err error) string {
-	stack := StackTrace(errors.Cause(err))
-
-	// we want to get the file path also
-	if stack != nil {
-		if len(stack) == 0 {
-			return ""
-		}
-
-		// we only want the most recent frame of stack
-		frame := stack[0]
-		functionPointer := runtime.FuncForPC(uintptr(frame))
-		if functionPointer != nil {
-			file, line := functionPointer.FileLine(uintptr(frame))
-			return fmt.Sprintf("%s, %s:%d", functionPointer.Name(), path.Base(file), line)
-		}
-	}
-
-	return ""
 }
