@@ -1,7 +1,7 @@
 package fakepkg
 
 import (
-	"swisstools/app/log/fakepkg/nestedpkg"
+	"go-swisstools/app/log/fakepkg/nestedpkg"
 
 	"github.com/pkg/errors"
 )
