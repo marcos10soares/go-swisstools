@@ -8,12 +8,8 @@ package log
 import (
 	"fmt"
 	"os"
-	"path"
-	"runtime"
-	"strings"
 	"time"
 
-	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
 )
 
@@ -79,34 +75,29 @@ func Info(msgs ...interface{}) {
 	defaultLogger.Info().Caller(1).Msg(fmt.Sprintf("%v", msgs))
 }
 
+// Warn prints warning log
+func Warn(msgs ...interface{}) {
+	defaultLogger.Warn().Caller(1).Msg(fmt.Sprintf("%v", msgs))
+}
+
+// Fatal prints fatal log
+func Fatal(err error, msgs ...interface{}) {
+	stackStr, cause := getStackStrAndCauseFromErr(err)
+
+	if cause != "" {
+		if stackStr != "" {
+			defaultLogger.Fatal().Caller(1).Err(err).Str("stack", stackStr).Str("cause", cause).Msg(fmt.Sprintf("%v", msgs))
+		} else {
+			defaultLogger.Fatal().Caller(1).Err(err).Str("cause", cause).Msg(fmt.Sprintf("%v", msgs))
+		}
+	} else {
+		defaultLogger.Fatal().Caller(1).Err(err).Msg(fmt.Sprintf("%v", msgs))
+	}
+}
+
 // Error prints error log
 func Error(err error, msgs ...interface{}) {
-	// cause := GetCauseCallerFromErr(err)
-	cause := ""
-	stackStr := ""
-	stack := StackTrace(errors.Cause(err))
-
-	if pc, _, _, ok := runtime.Caller(1); ok {
-		// we get the caller of the log, which is the highest level
-		caller := runtime.FuncForPC(pc)
-		filepath, line := caller.FileLine(pc)
-		filename := path.Base(filepath)
-
-		for i, frame := range stack {
-			currentFrameCaller := strings.Split(fmt.Sprintf("%s", frame), ":")[0]
-			stackStr += fmt.Sprintf("%s ", currentFrameCaller)
-
-			if i == 0 {
-				cause = fmt.Sprintf("%s, %s:%d", runtime.FuncForPC(uintptr(frame)).Name(), filename, line)
-			}
-
-			if currentFrameCaller == filename {
-				break
-			}
-		}
-
-		stackStr = strings.TrimSpace(stackStr)
-	}
+	stackStr, cause := getStackStrAndCauseFromErr(err)
 
 	if cause != "" {
 		if stackStr != "" {
@@ -145,6 +136,16 @@ func (l logger) Debug(msgs ...interface{}) {
 // Info prints information log
 func (l logger) Info(msgs ...interface{}) {
 	l.l.Info().Caller(1).Msg(fmt.Sprintf("%v", msgs))
+}
+
+// Warn prints warning log
+func (l logger) Warn(msgs ...interface{}) {
+	l.l.Warn().Caller(1).Msg(fmt.Sprintf("%v", msgs))
+}
+
+// Fatal prints fatal log
+func (l logger) Fatal(err error, msgs ...interface{}) {
+	l.l.Fatal().Caller(1).Err(err).Msg(fmt.Sprintf("%v", msgs))
 }
 
 func (l logger) Error(err error, msgs ...interface{}) {
