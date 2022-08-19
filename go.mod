@@ -1,4 +1,4 @@
-module go-swisstools
+module github.com/marcos10soares/go-swisstools
 
 go 1.18
 

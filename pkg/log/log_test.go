@@ -1,8 +1,9 @@
 package log_test
 
 import (
-	"go-swisstools/pkg/log"
 	"testing"
+
+	"github.com/marcos10soares/go-swisstools/pkg/log"
 
 	"github.com/pkg/errors"
 )

@@ -1,7 +1,7 @@
 package fakepkg
 
 import (
-	"go-swisstools/pkg/log"
+	"github.com/marcos10soares/go-swisstools/pkg/log"
 
 	"github.com/pkg/errors"
 )

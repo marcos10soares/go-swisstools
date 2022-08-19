@@ -5,9 +5,10 @@ package main
 
 import (
 	"fmt"
-	"go-swisstools/app/log/fakepkg"
-	"go-swisstools/app/log/fakepkg/nestedpkg"
-	"go-swisstools/pkg/log"
+
+	"github.com/marcos10soares/go-swisstools/app/log/fakepkg"
+	"github.com/marcos10soares/go-swisstools/app/log/fakepkg/nestedpkg"
+	"github.com/marcos10soares/go-swisstools/pkg/log"
 
 	"github.com/pkg/errors"
 )
